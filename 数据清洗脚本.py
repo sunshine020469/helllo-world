@@ -92,6 +92,15 @@ df[numeric_cols] = df[numeric_cols].fillna(df[numeric_cols].mean())
 
 print("✅ 空值替换完成！")
 
+# 遍历每一列，把 0 替换成均值
+for col in numeric_cols:
+    # 计算这一列的均值（排除 0 再算，更准确）
+    col_mean = df[df[col] != 0][col].mean()
+    
+    # 把这一列中 = 0 的值，替换成上面算好的均值
+    df[col] = df[col].replace(0, col_mean)
+
+print("✅ 所有 0 值已替换为对应列的均值！")
 
 # --------------------------
 # 【9】查看填充后的前5行
